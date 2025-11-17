@@ -1,43 +1,308 @@
 {
-  "typescript.tsdk": "node_modules/.pnpm/typescript@4.9.4/node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true,
-  "[javascript]": {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
+  // ============================================================================
+  // wewe-rss 子模块 VSCode 配置
+  // 生成时间: 2025-11-17
+  // 说明: 本配置为 wewe-rss 子模块专属，自动检测并配置所有语言工具链
+  // ============================================================================
+
+  // ============================================================================
+  // 1. Node.js / TypeScript 配置 (主要语言)
+  // ============================================================================
+  // 检测到: package.json, pnpm-workspace.yaml, pnpm-lock.yaml, tsconfig.json
+  // 工具链: pnpm (全项目统一), Node.js 20.9.0+
+  // 项目类型: pnpm monorepo (NestJS 后端 + Vite 前端)
+
   "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
   },
-  "[html]": {
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  },
+
+  // TypeScript 配置
+  "typescript.tsdk": "node_modules/.pnpm/typescript@5.3.3/node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.preferences.importModuleSpecifierFormat": "relative",
+  "typescript.preferences.useImplicitLabelPosition": true,
+  "typescript.preferences.quotePreference": "single",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.suggest.autoImports": true,
+  "typescript.suggest.completeFunctionCalls": true,
+  "typescript.inlayHints.parameterNames.enabled": "literals",
+  "typescript.inlayHints.parameterTypes.enabled": true,
+  "typescript.inlayHints.variableTypes.enabled": true,
+  "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+  "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+  "typescript.inlayHints.enumMemberValues.enabled": true,
+
+  // ESLint 配置
+  "eslint.enable": true,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "eslint.format.enable": true,
+  "eslint.lintTask.enable": true,
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
+
+  // Prettier 配置
+  "prettier.enable": true,
+  "prettier.semi": true,
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "all",
+  "prettier.tabWidth": 2,
+  "prettier.printWidth": 100,
+
+  // ============================================================================
+  // 2. Python 配置 (wewe-rss-dingtalk 子项目)
+  // ============================================================================
+  // 检测到: wewe-rss-dingtalk/requirements.txt
+  // 工具链: pip (主要), conda (备选)
+  // Python 版本: 3.8+
+
+  "python.defaultInterpreterPath": "${workspaceFolder}/wewe-rss-dingtalk/env/bin/python",
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": false,
+  "python.linting.flake8Enabled": true,
+  "python.linting.flake8Args": ["--max-line-length=120"],
+  "python.formatting.provider": "black",
+  "python.formatting.blackArgs": ["--line-length=120"],
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.python",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    }
+  },
+
+  // Python: Conda 环境配置 (主要)
+  // 说明: wewe-rss-dingtalk 使用 conda 管理依赖
+  // 设置方式:
+  //   1. 创建环境: conda create -n wewe-rss-dingtalk python=3.10
+  //   2. 激活: conda activate wewe-rss-dingtalk
+  //   3. 安装依赖: pip install -r wewe-rss-dingtalk/requirements.txt
+  "python.terminal.executeInFileDir": true,
+  "python.terminal.focusAfterLaunch": true,
+  "conda.condaPath": "conda",
+  "conda.envPath": "${workspaceFolder}/wewe-rss-dingtalk/env",
+
+  // Python: pip 环境配置 (备选)
+  // 注释提示: 如果需要使用 pip 管理环境，取消下面的注释并注释掉 conda 配置
+  //   1. 进入子项目: cd wewe-rss-dingtalk
+  //   2. 创建虚拟环境: python -m venv .venv
+  //   3. 激活: source .venv/bin/activate (Linux/macOS) 或 .venv\Scripts\activate (Windows)
+  //   4. 安装依赖: pip install -r requirements.txt
+  // "python.defaultInterpreterPath": "${workspaceFolder}/wewe-rss-dingtalk/.venv/bin/python",
+  // "conda.condaPath": "",
+  // "conda.envPath": "",
+
+  // Python: mypy 类型检查
+  "python.linting.mypyEnabled": true,
+  "python.linting.mypyArgs": [
+    "--ignore-missing-imports",
+    "--no-implicit-optional"
+  ],
+
+  // ============================================================================
+  // 3. 编辑器通用配置
+  // ============================================================================
+
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.rulers": [80, 100, 120],
+  "editor.wordWrap": "off",
+  "editor.trimAutoWhitespace": true,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+
+  // ============================================================================
+  // 4. 文件关联与排除
+  // ============================================================================
+
+  "files.associations": {
+    "*.ts": "typescript",
+    "*.tsx": "typescriptreact",
+    "*.jsx": "javascriptreact",
+    "*.js": "javascript",
+    "*.json": "json",
+    "*.yml": "yaml",
+    "*.yaml": "yaml",
+    "*.py": "python",
+    "*.html": "html",
+    "*.css": "css",
+    "*.scss": "scss"
+  },
+
+  // 排除临时目录和常见构建产物
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true,
+    "**/.next": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/.turbo": true,
+    "**/.cache": true,
+    "**/coverage": true,
+    "**/.venv": true,
+    "**/venv": true,
+    "**/__pycache__": true,
+    "**/*.pyc": true,
+    "**/tmp": true,
+    "**/.temp": true,
+    "**/.idea": true,
+    "**/.vscode-test": true,
+    "**/.eslintcache": true,
+    "**/.stylelintcache": true,
+    "**/pnpm-lock.yaml": false
+  },
+
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.next": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/coverage": true,
+    "**/.turbo": true,
+    "**/.git": true,
+    "**/pnpm-lock.yaml": true,
+    "**/.venv": true,
+    "**/__pycache__": true
+  },
+
+  // ============================================================================
+  // 5. 语言特定配置
+  // ============================================================================
+
+  // JSON 配置
+  "[json]": {
+    "editor.formatOnSave": true
+  },
+  "[jsonc]": {
+    "editor.formatOnSave": true
+  },
+
+  // YAML 配置
+  "[yaml]": {
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  },
+
+  // HTML 配置
+  "[html]": {
+    "editor.formatOnSave": true
+  },
+
+  // CSS/SCSS 配置
+  "[css]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.stylelint": "explicit"
+    }
   },
   "[scss]": {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.codeActionsOnSave": {
+      "source.fixAll.stylelint": "explicit"
+    }
   },
-  "[css]": {
+
+  // Markdown 配置
+  "[markdown]": {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.wordWrap": "on",
+    "editor.rulers": [80, 120]
   },
-  "[yaml]": {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "redhat.vscode-yaml"
+
+  // ============================================================================
+  // 6. 调试配置
+  // ============================================================================
+
+  "debug.console.fontSize": 12,
+
+  // ============================================================================
+  // 7. 扩展配置
+  // ============================================================================
+
+  // Pylance (Python 语言服务器 - 内置于 Python 扩展)
+  "pylance.typeCheckingMode": "basic",
+  "pylance.diagnosticsMode": "workspace",
+
+  // ============================================================================
+  // 8. 工作区特定配置
+  // ============================================================================
+
+  // Python 分析路径
+  "python.analysis.extraPaths": [
+    "${workspaceFolder}/wewe-rss-dingtalk"
+  ],
+
+  // 忽略 .vscode 文件夹被 .gitignore 忽略
+  // 注意: .vscode/settings.json 应被提交到 Git，以便团队共享配置
+  "git.ignoreLimitWarning": true,
+
+  // ============================================================================
+  // 9. 性能优化
+  // ============================================================================
+
+  "editor.largeFileOptimizations": true,
+  "editor.maxTokenizationLineLength": 20000,
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/**": true,
+    "**/.next/**": true,
+    "**/dist/**": true,
+    "**/build/**": true,
+    "**/coverage/**": true,
+    "**/.turbo/**": true,
+    "**/.cache/**": true,
+    "**/pnpm-lock.yaml": true
   },
-  "[json]": {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "vscode.json-language-features"
-  },
-  "cSpell.words": [
-    "callout",
-    "checkstyle",
-    "commitlint",
-    "daisyui",
-    "nestjs",
-    "nextui",
-    "tailwindcss",
-    "Trpc",
-    "wewe"
-  ]
+
+  // ============================================================================
+  // 10. 安全性和遥测
+  // ============================================================================
+
+  "security.workspace.trust.untrustedFiles": "open",
+  "telemetry.telemetryLevel": "off",
+  "telemetry.enableTelemetry": false,
+  "update.mode": "manual",
+  "update.showReleaseNotes": false,
+  "extensions.autoUpdate": true,
+  "extensions.autoCheckUpdates": true,
+  "extensions.ignoreRecommendations": false
 }

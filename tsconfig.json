@@ -5,6 +5,7 @@
     "emitDecoratorMetadata": true,
     "incremental": true,
     "skipLibCheck": true,
+    "strict": true,
     "strictNullChecks": true,
     "noImplicitAny": false,
     "strictBindCallApply": true,
